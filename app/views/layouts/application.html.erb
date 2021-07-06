@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
   <%= render 'layouts/head' %>
-  <body class="bg-light overflow-hidden">
+  <body class="bg-light overflow-auto">
     <%= render 'layouts/header' %>
+    <%= render 'layouts/flash' %>
     <%= yield %>
     <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
   </body>
 </html>

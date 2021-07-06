@@ -11,3 +11,8 @@ $blue-medium-light: #b1c7e2;
 .text-blue-medium-light {
   color: $blue-medium-light;
 }
+
+.alert-dismissible:hover {
+  opacity: 0.85;
+  border: 1px solid;
+}
