@@ -1,0 +1,13 @@
+$blue-medium-light: #b1c7e2;
+
+.nav-item:hover {
+  opacity: 0.6;
+}
+  
+.bg-blue-medium-light {
+  background-color: $blue-medium-light;
+}
+
+.text-blue-medium-light {
+  color: $blue-medium-light;
+}

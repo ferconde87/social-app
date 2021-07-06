@@ -1,0 +1,22 @@
+    <header>
+      <nav class="navbar navbar-expand-lg bg-light navbar-dar border navbar-fixed-top py-2">
+        
+        <div class="container">
+          <%= link_to image_tag("social-logo.svg", alt: "Social app logo", width: "75"), root_path, id: "logo", target: "_blank" %>
+
+          <button class="navbar-toggler border-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-justify text-primary" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navmenu">
+            <ul class="nav navbar-nav navbar-right ms-auto">
+              <li class="nav-item text-primary mx-2 text-center"><%= link_to "Home", root_path, class: "nav-link" %></li>
+              <li class="nav-item text-primary mx-2 text-center"><%= link_to "Log in", '#', class: "nav-link" %></li>
+              <li class="nav-item text-primary mx-2 text-center"><%= link_to "About", about_path, class: "nav-link" %></li>
+            </ul>
+          </div>
+        </div>
+      </nav>    
+    </header>
