@@ -1,20 +1,18 @@
 <% provide(:title, 'Sign up') %>
-<div class="container my-5 border py-5">
-  <h1 class="text-center mb-4 text-primary">Sign up</h1>
-  <div class="row">
-    <div class="col-md-6 mx-auto text-primary">
-      <%= render 'shared/error_messages' %>
-      <%= form_with(model: @user, local: true) do |f| %>
-        <%= f.label :name, class: "form-label mb-1" %>
-        <%= f.text_field :name, class: "form-control mb-3" %>
-        <%= f.label :email, class: "form-label mb-1" %>
-        <%= f.email_field :email, class: "form-control mb-3" %>
-        <%= f.label :password, class: "form-label mb-1" %>
-        <%= f.password_field :password, class: "form-control mb-3" %>
-        <%= f.label :password_confirmation, class: "form-label mb-1" %>
-        <%= f.password_field :password_confirmation, class: "form-control mb-4" %>
-        <%= f.submit "Create my account", class: "btn btn-primary px-4" %>
-      <% end %>
-    </div>
+<h1 class="text-center my-5 text-primary">Sign up</h1>
+<div class="row">
+  <div class="col-md-4 mx-auto text-primary">
+    <%= render 'shared/error_messages' %>
+    <%= form_with(model: @user, local: true) do |f| %>
+      <%= f.label :name, class: "form-label mb-1" %>
+      <%= f.text_field :name, class: "form-control mb-3" %>
+      <%= f.label :email, class: "form-label mb-1" %>
+      <%= f.email_field :email, class: "form-control mb-3" %>
+      <%= f.label :password, class: "form-label mb-1" %>
+      <%= f.password_field :password, class: "form-control mb-3" %>
+      <%= f.label :password_confirmation, class: "form-label mb-1" %>
+      <%= f.password_field :password_confirmation, class: "form-control mb-4" %>
+      <%= f.submit "Create my account", class: "btn btn-primary px-4" %>
+    <% end %>
   </div>
 </div>
