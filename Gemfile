@@ -20,6 +20,16 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'faker', '2.1.2'
+
+# To paginate users (needs the next two gems)
+gem 'bootstrap', '~> 5.0'
+
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+
+gem 'jquery-rails'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
