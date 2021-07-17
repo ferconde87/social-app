@@ -1,8 +1,10 @@
 <div class="container mt-5">
-  <h1 class="text-center text-primary mt-3 mb-md-4 mb-sm-0">Welcome to the Social App</h1>
+  <h1 class="text-center text-primary mt-3 mb-md-5 mb-sm-0">Welcome to the Social App</h1>
 
   <h2 class="text-center">
-    <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary mb-md-5 mb-sm-0 px-5 " %>
+    <% if !logged_in? %>
+      <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary mb-md-5 mb-sm-0 px-5 " %>
+    <% end %>
   </h2>
 
   <div class="text-center my-md-4 my-sm-0 my-auto">
