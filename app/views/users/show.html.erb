@@ -4,4 +4,18 @@
     <%= gravatar_for @user %>
   </h1>
   <h1 class="lead text-center"><%= @user.name %></h1>
+
+  <div class="col-md-8 m-auto mt-5">
+    <% if @user.posts.any? %>
+      <ol class="posts">
+        <h3 class="text-secondary">Posts (<%= @user.posts.count %>)</h3>
+        <%= render @posts %>
+      </ol>
+    <% end %>
+    <ol>
+      <div class="digg-pagination">
+        <%= will_paginate @posts %>
+      </div>
+    </ol>
+  </div>
 </div>

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :posts, dependent: :destroy
   attr_accessor :remember_token, :activation_token, :password_reset_token
   before_save :downcase_email
   before_create :create_activation_digest
@@ -77,6 +78,11 @@ class User < ApplicationRecord
     password_reset_sent_at < 2.hours.ago
   end
 
+  # Defines a proto-feed.
+  def feed
+    Post.where("user_id = ?", id)
+  end
+  
   private
     # Converts email to all lower-case.
     def downcase_email

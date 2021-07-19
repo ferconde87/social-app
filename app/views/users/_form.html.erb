@@ -1,5 +1,5 @@
-<%= render 'shared/error_messages' %>
 <%= form_with(model: @user, local: true) do |f| %>
+  <%= render 'shared/error_messages', object: @user %>
   <%= f.label :name, class: "form-label mb-1" %>
   <%= f.text_field :name, class: "form-control mb-3" %>
   <%= f.label :email, class: "form-label mb-1" %>

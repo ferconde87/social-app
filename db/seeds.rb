@@ -15,8 +15,7 @@ User.create!(
   password_confirmation: "123456",
   admin: true,
   activated: true,
-  activated_at: Time.zone.now)
-
+  activated_at: 1.minute.ago)
 
 # Generate a bunch of additional users.
 99.times do |n|
@@ -32,3 +31,11 @@ User.create!(
     activated_at: Time.zone.now)
 end
   
+# Generate posts for a subset of users.
+users = User.order(:created_at).take(6)
+users.each do |user| 
+  rand(40..60).times do
+    content = Faker::Lorem.sentence(word_count: rand(5..30))
+    user.posts.create!(content: content, created_at: rand(1..200).hours.ago)
+  end 
+end

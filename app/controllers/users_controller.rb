@@ -5,11 +5,14 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    
   end
   
   def show
-    user
-    redirect_to root_url and return unless user.activated?
+    # user
+    # redirect_to root_url and return unless user.activated?
+    @user = User.find(params[:id])
+    @posts = @user.posts.paginate(page: params[:page])
   end
   
   def index
@@ -55,14 +58,6 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    end
-
-    def logged_in_user
-      unless logged_in?
-        store_location
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
     end
 
     # Confirms the correct user.

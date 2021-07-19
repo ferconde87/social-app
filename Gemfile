@@ -22,16 +22,20 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'faker', '2.1.2'
 
-# To paginate users (needs the next two gems)
 gem 'bootstrap', '~> 5.0'
 
+# To paginate users (needs the next two gems)
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 
 gem 'jquery-rails'
 
+gem 'active_storage_validations', '~> 0.9.5'
+
+gem "mini_magick"
+
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -69,6 +73,7 @@ end
 
 group :production do
   gem 'pg', '1.1.4'
+  gem 'aws-sdk-s3', '1.46.0', require: false
 end
 
 

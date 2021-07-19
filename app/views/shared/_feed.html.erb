@@ -1,0 +1,13 @@
+<% if @feed_items.any? %>
+  <div class=" col-md-8 mx-auto mt-2">
+    <ol class="posts">
+      <h3 class="text-start text-secondary">Social Feed</h3>
+      <%= render @feed_items %>
+    </ol>
+    <ol>
+      <div class="digg-pagination">
+        <%= will_paginate @feed_items %>
+      </div>
+    </ol>
+  </div>
+<% end %>

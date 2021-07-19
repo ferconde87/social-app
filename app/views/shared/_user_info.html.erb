@@ -1,0 +1,10 @@
+<div class="text-center">
+  <div>
+    <%= link_to gravatar_for(current_user, size: 100), current_user %>
+  </div>
+  <div>
+    <div class="lead"><%= current_user.name %></div>
+    <small class="">(<%= pluralize(current_user.posts.count, "post") %>)</small>
+  </div>
+  <%= link_to "View my profile", current_user, class: "btn btn-secondary px-4 mt-2 mb-4" %>
+</div>
