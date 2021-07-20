@@ -18,5 +18,7 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     @user.posts.paginate(page: 1).each do |post|
       assert_match post.content, response.body
     end
+    assert_select 'strong#following', text: @user.following.count.to_s
+    assert_select 'strong#followers', text: @user.followers.count.to_s
   end
 end

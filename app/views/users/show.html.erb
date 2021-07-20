@@ -1,21 +1,19 @@
 <% provide(:title, @user.name) %>
 <div class="container my-5 mx-auto">
-  <h1 class="text-center">
-    <%= gravatar_for @user %>
-  </h1>
-  <h1 class="lead text-center"><%= @user.name %></h1>
 
+  <%= render 'show_user_info' %>
+
+  <%= render 'follow_form' if logged_in? %>
+  
   <div class="col-md-8 m-auto mt-5">
     <% if @user.posts.any? %>
-      <ol class="posts">
+      <div class="posts">
         <h3 class="text-secondary">Posts (<%= @user.posts.count %>)</h3>
         <%= render @posts %>
-      </ol>
-    <% end %>
-    <ol>
-      <div class="digg-pagination">
-        <%= will_paginate @posts %>
       </div>
-    </ol>
+    <% end %>
+    <div class="digg-pagination">
+      <%= will_paginate @posts %>
+    </div>
   </div>
 </div>

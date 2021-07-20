@@ -1,5 +1,7 @@
 $blue-medium-light: #b1c7e2;
 $blue: #0d6efd;
+$red-dark: rgb(128, 23, 23);
+$red-medium: rgb(160, 0, 0);
 
 
 .nav-item:hover {
@@ -28,6 +30,24 @@ $blue: #0d6efd;
 }
 
 .user-list:hover {
-  opacity: 0.5;
-  border: 4px solid $blue !important;
+  opacity: 0.6;
+  border: 3px solid $blue !important;
 }
+
+.link-follow:hover {
+  color: lightgrey;
+}
+
+.btn-delete {
+  z-index: 1100;
+  &:hover {
+    border: 1px solid $red-dark;
+    background-color: $red-medium;
+    opacity: 1;
+  }
+}
+
+.link-user {
+  text-decoration: none;
+}
+

@@ -46,3 +46,13 @@ van:
   content: "Dude, this van's, like, rolling probable cause."
   created_at: <%= 4.hours.ago %>
   user: lana
+
+hola:
+  content: "Hola soy Pepe Argento."
+  created_at: <%= 4.days.ago %>
+  user: pepe
+
+moni:
+  content: "¡Moni!"
+  created_at: <%= 1.minute.ago %>
+  user: pepe

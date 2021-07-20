@@ -3,10 +3,11 @@ require "test_helper"
 class PostsInterfaceTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:fernando)
+    @lana = users(:lana)
   end
     
   test "post interface" do
-    log_in_as(@user)
+    log_in_as(@lana)
     get root_path
     assert_select 'div.pagination'
     assert_select 'input[type=file]'
@@ -18,6 +19,7 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
     assert_select 'div.alert.alert-danger'
     assert_select 'div.pagination'
     
+    log_in_as(@user)
     # Valid submission
     content = "This post really ties the room together"
     image = fixture_file_upload('test/fixtures/kitten.jpg', 'image/jpeg')
@@ -32,10 +34,14 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
     end
     assert @user.posts.first.image.attached?
     assert_redirected_to root_url
-    follow_redirect!
-    assert_match content, response.body
+    # follow_redirect!
+    log_in_as(@lana)#change the user to check lana can see fernando's post
+    get root_path
+    assert_match content, response.body#cool!
+    log_in_as(@user)#coming back to fernando
     
     # Delete post
+    get user_path(users(:fernando))#need to go to the user's profile
     assert_select 'a[data-method]', count: 31 #1 logout + 30 from posts
     assert_match 'data-method="delete"', response.body
     first_post = @user.posts.paginate(page: 1).first
@@ -60,7 +66,9 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
     assert_match "2 posts", response.body
     other_user.posts.create!(content: "A post")
     get root_path
+    assert_no_match "A post", response.body
+    get user_path(users(:michael))#go to profile
     assert_match "A post", response.body
-    assert_match "3 posts", response.body
+    assert_match "Posts (3)", response.body#profile
   end     
 end
