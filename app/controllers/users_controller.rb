@@ -5,11 +5,9 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    
   end
   
   def show
-    # user
     # redirect_to root_url and return unless user.activated?
     @user = User.find(params[:id])
     @posts = @user.posts.paginate(page: params[:page])
@@ -22,16 +20,21 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.send_activation_email
-      flash[:info] = "Please check your email to activate your account."
+      if @user.activated
+        #using 3th-party login. Ex: Google
+        log_in @user
+        flash[:success] = "Your profile has been created successfully!."
+      else
+        @user.send_activation_email
+        flash[:info] = "Please check your email to activate your account."
+      end
       redirect_to root_url      
     else
       render 'new'
     end
   end
 
-  def edit  
-    # @user = User.find(params[:id])
+  def edit
   end
 
   def update

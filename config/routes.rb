@@ -19,4 +19,7 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :posts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  #google-sign-in
+  get 'google_login', to: 'google_logins#new'
+  get 'google_login/create', to: 'google_logins#create', as: :google_create_login
 end

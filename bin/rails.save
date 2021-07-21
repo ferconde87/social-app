@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+load File.expand_path("spring", __dir__)
+APP_PATH = File.expand_path('.config/application', __dir__)
+require_relative "../config/boot"
+require "rails/commands"
+
+google_sing_in:
+  client_id: "839458024780-bnvmaer1g9c6omoj6h64rd9ngiistgam.apps.googleusercontent.com"
+  client_secret: "DAIlGBb_ExHhwoghiO2OoDPB"

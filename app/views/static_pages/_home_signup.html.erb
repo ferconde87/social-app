@@ -1,11 +1,26 @@
 <h1 class="text-center text-primary mt-3 mb-md-5 mb-sm-0">Welcome to the Social App</h1>
 
-<h2 class="text-center">
-  <% if !logged_in? %>
-    <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary mb-md-5 mb-sm-0 px-5 " %>
-  <% end %>
-</h2>
+<div class="row mt-5 my-auto">
+  <div class="col-6">
+    <div class="col-6 mx-auto">
+      <div class="text-center h2 text-primary mb-3"> Sign up </div>
+      <%= google_sign_in_button proceed_to: google_create_login_url, class: "btn btn-lg btn-light border w-100 mb-2" do %>
+        Sign up with your <%= image_tag('google_logo.png', alt: 'Google') %> account
+      <% end %>
+      <%= link_to "Sign up with your email", signup_path, class: "btn btn-lg btn-primary mb-md-5 mb-sm-0 w-100 " %>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="col-6 mx-auto">
+      <div class="text-center h2 text-primary mb-3"> Log in </div>
+      <%= google_sign_in_button proceed_to: google_create_login_url, class: "btn btn-lg btn-light border w-100 mb-2" do %>
+        Log in with your <%= image_tag('google_logo.png', alt: 'Google') %> account
+      <% end %>
+      <%= link_to "Log in with your email", login_path, class: "btn btn-lg btn-primary mb-md-5 mb-sm-0 w-100 " %>
+    </div>
+  </div>
+</div>
 
-<div class="text-center my-md-4 my-sm-0 my-auto">
+<div class="text-center my-sm-0 my-auto">
   <%= link_to image_tag("social-media.svg", alt: "Social app logo", width: "auto", class: "img-fluid"), "https://ferconde87.github.io/", target: "_blank" %>
 </div>
