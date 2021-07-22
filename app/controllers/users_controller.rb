@@ -20,14 +20,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      if @user.activated = params[:activated] == "true"
-        #using 3th-party login. Ex: Google
-        log_in @user
-        flash[:success] = "Your profile has been created successfully!"
-      else
-        @user.send_activation_email
-        flash[:info] = "Please check your email to activate your account."
-      end
+      @user.send_activation_email
+      flash[:info] = "Please check your email to activate your account."
       redirect_to root_url      
     else
       render 'new'

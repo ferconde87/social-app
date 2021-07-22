@@ -11,13 +11,6 @@ module SessionsHelper
     cookies.permanent.encrypted[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
   end
-  
-  # Returns the current logged-in user (if any).
-  def current_user
-    if session[:user_id]
-      @current_user ||= User.find_by(id: session[:user_id])
-    end
-  end
 
   # Returns the user corresponding to the remember token cookie.
   def current_user
@@ -34,9 +27,7 @@ module SessionsHelper
   
   # Returns true if the user is logged in, false otherwise.
   def logged_in?
-    # !current_user.nil? 
-    # !session[:user_id].nil?
-    !session[:user_id].nil?
+    !session[:user_id].nil? && !current_user.nil?
   end
 
   # Forgets a persistent session.

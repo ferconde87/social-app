@@ -6,16 +6,20 @@ class GoogleLoginsController < ApplicationController
     if google_user = authenticate_with_google
       user = User.find_by(email: google_user.email_address)
       if user.nil?
-        name = google_user.name
-        email = google_user.email_address
-        @user = User.new(name: name, email: email, activated: true)
-        render :template => "users/new"
-        # redirect_to new_user_path(user: {name: name, email: email})
-        return
+        random_password = User.new_token
+        user = User.create!(
+          name: google_user.name,
+          email: google_user.email_address,
+          password: random_password,
+          password_confirmation: random_password,
+          activated: true)
+
+        flash[:success] = "Your profile has been created successfully!"
+      else
+        flash[:success] = 'Successfully logged in'
       end
-      # cookies.signed[:user_id] = user.id
       log_in user
-      redirect_to user
+      redirect_to root_path
     else
       redirect_to login_url, alert: 'Google authentication fail'
     end
