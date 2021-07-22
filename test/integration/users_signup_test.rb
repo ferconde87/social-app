@@ -3,6 +3,7 @@ require "test_helper"
 class UsersSignupTest < ActionDispatch::IntegrationTest
   def setup
     ActionMailer::Base.deliveries.clear
+    @user_not_valid_yet = users(:user_not_valid_yet)
   end
   
   test "invalid signup information" do
@@ -45,5 +46,27 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_template 'users/show'
     assert is_logged_in?
   end
-    
+
+  test "sign up with activated user due to using 3th-party sign up" do
+    @user_not_valid_yet = User.new(name: "pepe", email: "pepe@pepe.com", activated: "true")
+    assert_not @user_not_valid_yet.valid?
+    get "/users/new"
+    assert_difference 'User.count', 1 do
+      post users_path, params: {
+        user: {  
+          name: @user_not_valid_yet.name,
+          email: @user_not_valid_yet.email,  
+          password: "password",
+          password_confirmation: "password",
+          activated: true },
+        activated: true }
+    end
+    @user = assigns(:user)
+    assert @user.valid?
+    assert logged_in?
+    assert_not flash.empty?
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_select 'div.alert.alert-success'
+  end
 end

@@ -44,3 +44,8 @@ user_<%= n %>:
   activated: true
   activated_at: <%= Time.zone.now %>
 <% end %>
+
+user_not_valid_yet:
+  name: "Without Password Yet"
+  email: "usersignup@withgoogleexample.com"
+  activated: "true"
