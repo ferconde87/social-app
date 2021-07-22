@@ -1,5 +1,10 @@
 <h1 class="text-center text-primary mt-3 mb-md-5 mb-sm-0">Welcome to the Social App</h1>
 
+<%= link_to "Hola", hola_path, class: "btn btn-danger px-5" %>
+
+<%= link_to "Connect Facebook with POST", "/auth/facebook", method: :post, class: "btn btn-primary" %>
+
+
 <div class="row mt-5 my-auto">
   <div class="col-6">
     <div class="col-6 mx-auto">
@@ -7,7 +12,11 @@
       <%= google_sign_in_button proceed_to: google_create_login_url, class: "btn btn-lg btn-light border w-100 mb-2" do %>
         Sign up with your <%= image_tag('google_logo.png', alt: 'Google') %> account
       <% end %>
-      <%= link_to "Sign up with your email", signup_path, class: "btn btn-lg btn-primary mb-md-5 mb-sm-0 w-100 " %>
+      
+      <%= link_to "Sign up with your email", signup_path, class: "btn btn-lg btn-primary mb-sm-2 w-100 " %>
+      <div class="w-100 btn-facebook btn">
+        <div class="fb-login-button" data-width="auto" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+      </div>
     </div>
   </div>
   <div class="col-6">

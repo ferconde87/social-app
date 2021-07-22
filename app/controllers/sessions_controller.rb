@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: :create
+
   def new
   end
 
@@ -23,5 +25,11 @@ class SessionsController < ApplicationController
   def destroy
     log_out if logged_in?
     redirect_to root_path
+  end
+  
+  protected
+
+  def auth_hash
+    request.env['omniauth.auth']
   end    
 end
