@@ -1,8 +1,13 @@
 class GoogleLoginsController < ApplicationController
+  def initialize
+    @strategy = "google"
+  end
+
   def new
   end
 
   def create
+    debugger
     if google_user = authenticate_with_google
       user = User.find_by(email: google_user.email_address)
       if user.nil?

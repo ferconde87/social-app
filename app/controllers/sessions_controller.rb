@@ -25,11 +25,5 @@ class SessionsController < ApplicationController
   def destroy
     log_out if logged_in?
     redirect_to root_path
-  end
-  
-  protected
-
-  def auth_hash
-    request.env['omniauth.auth']
-  end    
+  end 
 end

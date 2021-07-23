@@ -113,5 +113,11 @@ class UserTest < ActiveSupport::TestCase
     pepe.posts.each do |post_unfollowed|
       assert_not fernando.feed.include?(post_unfollowed)
     end
-  end  
+  end
+  
+  # test "when email is nil, downcase_email don't raise undefined method for nil:NilClass" do
+  #   @user.email = nil
+  #   @user.downcase_email
+  #   assert_nil @user.email
+  # end 
 end

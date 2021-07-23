@@ -23,7 +23,9 @@ Rails.application.routes.draw do
   get 'google_login', to: 'google_logins#new'
   get 'google_login/create', to: 'google_logins#create', as: :google_create_login
 
-  post '/auth/facebook/callback', to: 'sessions#create'
+  get '/auth/facebook/callback', to: 'facebook_logins#create'
+  post '/auth/facebook/callback', to: 'facebook_logins#create'
+  get '/auth/facebook/cancelled', to: 'facebook_logins#cancelled'
   # post '/auth/facebook/callback', to: 'sessions#create'
 
 end
