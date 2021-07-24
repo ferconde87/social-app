@@ -1,30 +1,26 @@
-class GoogleLoginsController < ApplicationController
-  def initialize
-    @strategy = "google"
-  end
-
+class GoogleLoginsController < LoginsController
   def new
   end
 
   def create
-    debugger
     if google_user = authenticate_with_google
-      user = User.find_by(email: google_user.email_address)
+      id = google_user.user_id
+      user = User.find_by(google_id: id)
       if user.nil?
-        random_password = User.new_token
-        user = User.create!(
-          name: google_user.name,
-          email: google_user.email_address,
-          password: random_password,
-          password_confirmation: random_password,
-          activated: true)
-
-        flash[:success] = "Your profile has been created successfully!"
-      else
-        flash[:success] = 'Successfully logged in'
+        if user = User.find_by(email: google_user.email_address)
+          user.activate_with_atttribute("google_id", id)
+        end
       end
-      log_in user
-      redirect_to root_path
+      if user.nil?
+        user_info = {}
+        user_info[:name] = google_user.name
+        user_info[:email] = google_user.email_address
+        user_info[:google_id] = id
+        user = create_user(user_info)
+        login(user, signup_message)
+      else
+        login(user, login_message)
+      end
     else
       redirect_to login_url, alert: 'Google authentication fail'
     end
