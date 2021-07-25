@@ -74,9 +74,11 @@ ActiveRecord::Schema.define(version: 2021_07_23_082440) do
     t.datetime "password_reset_sent_at"
     t.string "google_id"
     t.string "facebook_id"
+    t.string "twitter_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["facebook_id"], name: "index_users_on_facebook_id"
     t.index ["google_id"], name: "index_users_on_google_id"
+    t.index ["twitter_id"], name: "index_users_on_twitter_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

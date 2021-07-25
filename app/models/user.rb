@@ -116,6 +116,11 @@ class User < ApplicationRecord
   def followers?(other_user)
     followers.include?(other_user)
   end
+
+  # Update the attribute name with value and activated the user
+  def activate_with_atttribute(name, value)
+    update_columns("#{name}": value, activated: true, activated_at: Time.zone.now)
+  end
   
   private
     # Converts email to all lower-case.

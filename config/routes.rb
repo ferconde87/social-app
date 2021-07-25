@@ -26,6 +26,10 @@ Rails.application.routes.draw do
   get '/auth/facebook/callback', to: 'facebook_logins#create'
   post '/auth/facebook/callback', to: 'facebook_logins#create'
   get '/auth/facebook/cancelled', to: 'facebook_logins#cancelled'
-  # post '/auth/facebook/callback', to: 'sessions#create'
+  post '/auth/twitter', to: 'twitter_logins#create'
+  get '/auth/twitter/callback', to: 'twitter_logins#create'
+  post '/auth/twitter/callback', to: 'twitter_logins#create'
+  get '/auth/twitter/cancelled', to: 'twitter_logins#cancelled'
+  # post '/auth/twitter/callback', to: 'sessions#create'
 
 end

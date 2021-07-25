@@ -113,35 +113,35 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  # test "activate_with_atttribute only update the right attribute" do
-  #   @fernando.activate_with_atttribute(:google_id, "google_id_value")
-  #   assert_equal @fernando[:google_id], "google_id_value"
-  # end
+  test "activate_with_atttribute only update the right attribute" do
+    @fernando.activate_with_atttribute(:google_id, "google_id_value")
+    assert_equal @fernando[:google_id], "google_id_value"
+  end
 
-  # test "activate_with_attribute set the user activated" do
-  #   @fernando.activated = false
-  #   assert_not @fernando.activated?
-  #   @fernando.activate_with_atttribute(:google_id, "google_id_value")
-  #   assert @fernando.activated?
-  # end
+  test "activate_with_attribute set the user activated" do
+    @fernando.activated = false
+    assert_not @fernando.activated?
+    @fernando.activate_with_atttribute(:google_id, "google_id_value")
+    assert @fernando.activated?
+  end
 
-  # test "when user alredy activated keeps user activated" do
-  #   @fernando.activated = true
-  #   assert @fernando.activated?
-  #   @fernando.activate_with_atttribute(:google_id, "google_id_value")
-  #   assert @fernando.activated?
-  # end
+  test "when user alredy activated keeps user activated" do
+    @fernando.activated = true
+    assert @fernando.activated?
+    @fernando.activate_with_atttribute(:google_id, "google_id_value")
+    assert @fernando.activated?
+  end
 
-  # test "activate_with_attribute raise error if attribute is wrong" do
-  #   assert_raise ActiveModel::MissingAttributeError do
-  #     @fernando.activate_with_atttribute(:pepe, "google_id_value")
-  #   end
-  # end
+  test "activate_with_attribute raise error if attribute is wrong" do
+    assert_raise ActiveModel::MissingAttributeError do
+      @fernando.activate_with_atttribute(:pepe, "google_id_value")
+    end
+  end
 
-  # test "activate_with_attribute raise error if parameter value type is wrong" do
-  #   assert_raise TypeError do
-  #     @fernando.activate_with_atttribute(:google_id, ["wrong data type"])
-  #   end
-  # end
+  test "activate_with_attribute raise error if parameter value type is wrong" do
+    assert_raise TypeError do
+      @fernando.activate_with_atttribute(:google_id, ["wrong data type"])
+    end
+  end
   
 end
