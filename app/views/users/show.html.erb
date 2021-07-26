@@ -3,6 +3,8 @@
 
   <%= render 'show_user_info' %>
 
+  <%= render 'shared/post_form' if current_user?(@user) %>
+
   <%= render 'follow_form' if logged_in? %>
   
   <div class="col-md-8 m-auto mt-5">

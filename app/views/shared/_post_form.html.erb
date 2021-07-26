@@ -2,10 +2,8 @@
   <%= render 'shared/error_messages', object: f.object %>
   <div class="col-lg-6 col-md-10 mx-auto">
     <div class="form-floating ">
-      <%= f.text_area :content, id: 'post-form', placeholder: 'What are you thinking?',   class: "form-control mb-4", style: "height: 100px", :required => true %>    
-      <%= f.label 'What are you thinking?', for: 'post-form', class: "text-secondary form-label" %>
-      <%= f.label 'What are you thinking?', for: 'post-form', class: "text-secondary form-label" %>
-    </div>
+      <%= f.text_area :content, id: 'post-form', placeholder: 'What are you thinking?',   class: "form-control mb-2", style: "height: 100px", :required => true %>    
+      <%= f.label 'What are you thinking?', for: 'post-form', class: "text-secondary form-label" %>    </div>
     <div class="mb-4">
       <div>
         <%= f.label 'Upload an image to your post...', for: 'exampleFormControlFile1', class: "text-secondary form-label" %>

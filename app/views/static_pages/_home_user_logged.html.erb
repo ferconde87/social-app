@@ -1,6 +1,7 @@
 <div class="my-5 mx-auto">
-  <%= render 'shared/user_info' %>
-  <%= render 'shared/stats' %>
+  <div class="col-lg-6 col-md-10 mx-auto mb-1">
+    <span class=lead> Hi <%= @user.name %>!</span>
+  </div>
   <%= render 'shared/post_form' %>
   <%= render 'shared/feed' %>
 </div>
