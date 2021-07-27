@@ -56,13 +56,15 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
 
   test "post count" do
     log_in_as(@user)
-    get root_path
+    get user_path(@user)
     assert_match "#{@user.posts.count} posts", response.body
+    # get root_path
     
     # User with zero microposts
     other_user = users(:michael)
     log_in_as(other_user)
-    get root_path
+    # get root_path
+    get user_path(other_user)
     assert_match "2 posts", response.body
     other_user.posts.create!(content: "A post")
     get root_path

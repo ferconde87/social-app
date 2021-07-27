@@ -1,6 +1,12 @@
-  <h1 class="text-center">
+  <div class="text-center">
     <%= gravatar_for @user %>
-  </h1>
-  <h1 class="lead text-center"><%= @user.name %></h1>
+  </div>
+  <div class="text-center mb-2">
+    <span class="lead">
+      <%= @user.name %>
+    </span>
+    <small class="">(<%= pluralize(@user.posts.count, "post") %>)</small>
+  </div>
+
   
   <%= render 'shared/stats' %>

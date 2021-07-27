@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     # redirect_to root_url and return unless user.activated?
     @user = User.find(params[:id])
     @posts = @user.posts.paginate(page: params[:page])
-    @post = current_user.posts.build
+    @post = @user.posts.build
   end
   
   def index
