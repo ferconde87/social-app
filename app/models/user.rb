@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_many :posts, dependent: :destroy
+  has_many :likes
+  has_many :posts_liked, -> {where(likes: {liked:true})}, through: :likes, source: :post
   has_one_attached :image
   attr_accessor :remember_token, :activation_token, :password_reset_token
   before_save :downcase_email
