@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :likes
   has_many :posts_liked, -> {where(likes: {liked:true})}, through: :likes, source: :post
+  has_many :posts_disliked, -> {where(likes: {liked:false})}, through: :likes, source: :post
   has_one_attached :image
   attr_accessor :remember_token, :activation_token, :password_reset_token
   before_save :downcase_email
@@ -123,16 +124,39 @@ class User < ApplicationRecord
   def activate_with_atttribute(name, value)
     update_columns("#{name}": value, activated: true, activated_at: Time.zone.now)
   end
+
+  # User likes post ?
+  def like?(post)
+    posts_liked.include?(post)
+  end
+
+  # User dislikes post ?
+  def dislike?(post)
+    posts_disliked.include?(post)
+  end
+
+  # User likes a post
+  def like_post(post)
+    posts_liked << post if !like? post
+    posts_disliked.delete post 
+  end
+  
+  # User dislikes a post
+  def dislike_post(post)
+    posts_disliked << post if !dislike? post
+    posts_liked.delete post
+  end
   
   private
-    # Converts email to all lower-case.
-    def downcase_email
-      email.downcase!
-    end
-    
-    # Creates and assigns the activation token and digest.
-    def create_activation_digest
-      self.activation_token = User.new_token
-      self.activation_digest = User.digest(activation_token)
-    end
+  
+  # Converts email to all lower-case.
+  def downcase_email
+    email.downcase!
+  end
+  
+  # Creates and assigns the activation token and digest.
+  def create_activation_digest
+    self.activation_token = User.new_token
+    self.activation_digest = User.digest(activation_token)
+  end
 end

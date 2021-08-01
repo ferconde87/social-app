@@ -143,5 +143,4 @@ class UserTest < ActiveSupport::TestCase
       @fernando.activate_with_atttribute(:google_id, ["wrong data type"])
     end
   end
-  
 end

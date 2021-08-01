@@ -7,10 +7,8 @@ class UserLikesPostTest < ActionDispatch::IntegrationTest
   end
 
   test "user likes a post" do
-    assert_not @user.posts_liked.include?(@post)
-    @user.likes.create(post: @post)
-    assert @user.posts_liked.include?(@post)
+    assert_not @user.like?(@post)
+    @user.like_post @post
+    assert @user.like?(@post)
   end
-
-  
 end
