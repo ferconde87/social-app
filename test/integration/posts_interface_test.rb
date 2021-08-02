@@ -42,7 +42,8 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
     
     # Delete post
     get user_path(users(:fernando))#need to go to the user's profile
-    assert_select 'a[data-method]', count: 31 #1 logout + 30 from posts
+    #1 a[data-method] logout + 30 from posts * 3 (delete + like + dislike) = 91 
+    assert_select 'a[data-method]', count: 91 
     assert_match 'data-method="delete"', response.body
     first_post = @user.posts.paginate(page: 1).first
     assert_difference 'Post.count', -1 do
@@ -51,7 +52,8 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
     
     # Visit different user (no delete links)
     get user_path(users(:michael))
-    assert_select 'a[data-method]', count: 1 #only logout
+    assert_match 'Posts (2)', response.body
+    assert_select 'a[data-method]', count: 5 #logout + 2*like + 2*dislike
   end
 
   test "post count" do

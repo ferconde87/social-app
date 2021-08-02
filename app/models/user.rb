@@ -146,6 +146,16 @@ class User < ApplicationRecord
     posts_disliked << post if !dislike? post
     posts_liked.delete post
   end
+
+  # User cancel a previous like post
+  def cancel_like(post)
+    posts_liked.delete post
+  end
+
+  # User cancel a previous dislike post
+  def cancel_dislike(post)
+    posts_disliked.delete post
+  end
   
   private
   

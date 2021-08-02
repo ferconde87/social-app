@@ -19,6 +19,12 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :posts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  post '/like_post/:id', to: 'likes#like'
+  post '/cancel_like/:id', to: 'likes#cancel_like'
+  post '/dislike_post/:id', to: 'likes#dislike'
+  post '/cancel_dislike/:id', to: 'likes#cancel_dislike'
+  post '/update_likes', to: 'posts#update_likes'
+  post '/update_dislikes', to: 'posts#update_dislikes'
   #google-sign-in
   get 'google_login', to: 'google_logins#new'
   get 'google_login/create', to: 'google_logins#create', as: :google_create_login
@@ -30,6 +36,4 @@ Rails.application.routes.draw do
   get '/auth/twitter/callback', to: 'twitter_logins#create'
   post '/auth/twitter/callback', to: 'twitter_logins#create'
   get '/auth/twitter/cancelled', to: 'twitter_logins#cancelled'
-  # post '/auth/twitter/callback', to: 'sessions#create'
-
 end

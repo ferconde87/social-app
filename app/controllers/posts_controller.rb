@@ -24,17 +24,6 @@ class PostsController < ApplicationController
     end
   end
 
-  def update_likes
-    debugger
-     @like = @post.likes.build(curent_user)
-     if like.save
-      flash[:info] = "Post liked!"
-     else
-      flash[:danger] = "Your like could not be saved!"
-     end
-     redirect_back(fallback_location: root_url)
-  end
-
   private
 
   def post_params

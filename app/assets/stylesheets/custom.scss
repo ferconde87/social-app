@@ -63,6 +63,7 @@ $facebook-color: rgb(24,119,242);
 }
 
 .btn-like {
+  font-style: normal;
   &:hover {
     opacity: 0.7;
     color: $blue;

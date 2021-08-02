@@ -5,6 +5,7 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:fernando)
+    log_in_as(@user)
   end
 
   test "profile display" do

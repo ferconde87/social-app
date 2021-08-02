@@ -12,5 +12,15 @@ class Post < ApplicationRecord
   def display_image
     image.variant(resize_to_limit: [800, 600])
   end
+
+  # Count likes
+  def likes_count
+    likes.select{ |l| l.liked }.length
+  end
+
+  # Count dislikes
+  def dislikes_count
+    likes.select{ |l| !l.liked }.length
+  end
   
 end
