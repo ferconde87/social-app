@@ -47,3 +47,19 @@ following = users[2..50]
 followers = users[3..40]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
+
+# Create likes and dislikes
+users = User.order(:created_at).take(20)
+posts_number = 40
+posts = Post.order(:created_at).take(posts_number)
+users.each do |user|
+  rand(1..posts_number).times do |index|
+    user.like_post posts[index]
+  end
+end
+
+users.each do |user|
+  rand(1..posts_number).times do |index|
+    user.dislike_post posts[index] unless user.like? posts[index]
+  end
+end
