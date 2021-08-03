@@ -37,4 +37,6 @@ Rails.application.routes.draw do
   get '/auth/twitter/callback', to: 'twitter_logins#create'
   post '/auth/twitter/callback', to: 'twitter_logins#create'
   get '/auth/twitter/cancelled', to: 'twitter_logins#cancelled'
+  get '/contact', to: 'contact#new'
+  post 'contact', to: 'contact#create'
 end
