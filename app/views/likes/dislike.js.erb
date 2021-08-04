@@ -1,0 +1,12 @@
+var like = document.getElementById("like_<%=@post.id%>");
+var dislike = document.getElementById("dislike_<%=@post.id%>");
+
+if (dislike.classList.contains("bi-hand-thumbs-down")) {
+  dislike.classList.replace("bi-hand-thumbs-down", "bi-hand-thumbs-down-fill")
+  like.classList.replace("bi-hand-thumbs-up-fill", "bi-hand-thumbs-up")
+} else {
+  dislike.classList.replace("bi-hand-thumbs-down-fill", "bi-hand-thumbs-down")
+}
+like.textContent = " " + <%= @post.likes_count %>
+dislike.textContent = " " + <%= @post.dislikes_count %>
+

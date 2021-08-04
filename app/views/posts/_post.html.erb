@@ -32,21 +32,21 @@
         </small>
         <div class="ms-auto">
           <% if current_user.like? post %>
-            <%= link_to "/cancel_like/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-primary' do %>
-              <i class="bi bi-hand-thumbs-up-fill btn-like"> <%= post.reload.likes_count %></i> 
+            <%= link_to "/like/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-primary' do %>
+              <i class="bi bi-hand-thumbs-up-fill btn-like" id="like_<%=post.id%>"> <%= post.reload.likes_count %></i> 
             <% end %>
           <% else %>
-            <%= link_to "/like_post/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-dark' do %>
-                <i class="bi bi-hand-thumbs-up btn-like"> <%= post.likes_count %></i> 
+            <%= link_to "/like/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-primary' do %>
+                <i class="bi bi-hand-thumbs-up btn-like" id="like_<%=post.id%>"> <%= post.likes_count %></i> 
             <% end %>
           <% end %>
           <% if current_user.dislike? post %>
-            <%= link_to "/cancel_dislike/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-primary ms-2' do %>
-              <i class="bi bi-hand-thumbs-down-fill btn-like"> <%= post.reload.dislikes_count %></i> 
+            <%= link_to "/dislike/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-primary ms-2' do %>
+              <i class="bi bi-hand-thumbs-down-fill btn-like" id="dislike_<%=post.id%>">  <%= post.reload.dislikes_count %></i> 
             <% end %>
           <% else %>
-            <%= link_to "/dislike_post/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-dark ms-2' do %>
-              <i class="bi bi-hand-thumbs-down btn-like"> <%= post.reload.dislikes_count %></i> 
+            <%= link_to "/dislike/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-primary ms-2' do %>
+              <i class="bi bi-hand-thumbs-down btn-like" id="dislike_<%=post.id%>"> <%= post.reload.dislikes_count %></i> 
             <% end %>
           <% end %>
         </div>
