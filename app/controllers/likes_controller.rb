@@ -3,26 +3,30 @@ class LikesController < ApplicationController
   before_action :current_post
 
   def like
-    current_user.like_post @post
-    redirect_back(fallback_location: root_url)
-  end
-
-  def cancel_like
-    current_user.cancel_like @post
-    redirect_back(fallback_location: root_url)
+    respond_to do |format|
+      if !current_user.like? @post
+        current_user.like_post @post
+      else
+        current_user.cancel_like @post
+      end
+      format.html { redirect_back fallback_location: root_url }
+      format.js
+    end
   end
 
   def dislike
-    current_user.dislike_post @post
-    redirect_back(fallback_location: root_url)
-  end
-
-  def cancel_dislike
-    current_user.cancel_dislike @post
-    redirect_back(fallback_location: root_url)
+    respond_to do |format|
+      if !current_user.dislike? @post
+        current_user.dislike_post @post
+      else
+        current_user.cancel_dislike @post
+      end
+      format.html { redirect_back fallback_location: root_url }
+      format.js
+    end
   end
 
   def current_post
-    @post = Post.find(params[:id])
+    @post ||= Post.find(params[:id])
   end
 end
