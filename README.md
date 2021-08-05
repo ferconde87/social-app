@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Welcome to the Social App Repository!
 
-Things you may want to cover:
+My name is Fernando and I'm refreshing my knowledge of Ruby On Rails while I'm trying to do a cool app at the same time.
 
-* Ruby version
+Coming soon:
 
-* System dependencies
+Post with commentaries with like/dislike buttons on them
 
-* Configuration
 
-* Database creation
 
-* Database initialization
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
