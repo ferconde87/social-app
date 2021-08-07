@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :posts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :comments, only: [:create, :destroy]
   post '/like/:id', to: 'likes#like'
   post '/cancel_like/:id', to: 'likes#cancel_like'
   post '/dislike/:id', to: 'likes#dislike'

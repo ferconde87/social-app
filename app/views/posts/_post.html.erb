@@ -8,59 +8,33 @@
         </small>
       </div>
     </div>
+    
     <div class="card-text col-md-9 align-self-center">
-        <%= post.content %>      
-      <div>
-        <small class="text-muted">
-          Posted <%= time_ago_in_words(post.created_at) %> ago.
-        </small>
-      </div>
+        <%= post.content %>
     </div>
+    
     <% if current_user?(post.user) %>
       <div class="card-text col-md-1 text-end">
         <%= link_to "", post, method: :delete, data: { confirm: "Are you sure you want to delete the post?" }, class: "btn btn-sm btn-close btn-danger" %>
       </div>
     <% end %>
+  
+    <div class="text-center">
+      <%= image_tag(post.display_image, alt: "post image") if post.image.attached? %>
+    </div>
+
+    <div class="d-flex align-items-end mt-2" >
+      <small class="text-muted">
+        Posted <%= time_ago_in_words(post.created_at) %> ago.
+      </small>
+      
+      <%= render partial: 'likes/like', locals: { object: post } %>
+    </div>
   </div>
-  <div class="text-center">
-    <%= image_tag(post.display_image, alt: "post image") if post.image.attached? %>
+  <div class="row card-body">
+    <%= render partial: 'comments/form', locals: { post_id: post.id } %>
   </div>
-  <div class="card-footer bg-white">
-      <div class="d-flex align-items-end" >
-        <small class="text-muted">
-          Posted <%= time_ago_in_words(post.created_at) %> ago.
-        </small>
-        <div class="ms-auto">
-          <% if current_user.like? post %>
-            <%= link_to "/like/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-primary' do %>
-              <i class="bi bi-hand-thumbs-up-fill btn-like" id="like_<%=post.id%>"> <%= post.reload.likes_count %></i> 
-            <% end %>
-          <% else %>
-            <%= link_to "/like/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-primary' do %>
-                <i class="bi bi-hand-thumbs-up btn-like" id="like_<%=post.id%>"> <%= post.likes_count %></i> 
-            <% end %>
-          <% end %>
-          <% if current_user.dislike? post %>
-            <%= link_to "/dislike/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-primary ms-2' do %>
-              <i class="bi bi-hand-thumbs-down-fill btn-like" id="dislike_<%=post.id%>">  <%= post.reload.dislikes_count %></i> 
-            <% end %>
-          <% else %>
-            <%= link_to "/dislike/#{post.id}", method: :post, remote: true, class: 'text-decoration-none text-primary ms-2' do %>
-              <i class="bi bi-hand-thumbs-down btn-like" id="dislike_<%=post.id%>"> <%= post.reload.dislikes_count %></i> 
-            <% end %>
-          <% end %>
-        </div>
-      </div>
+  <div class="row card-body">
+    <%= render post.comments %>
   </div>
 </div>
-
-<script type="text/javascript">
-  $("#micropost_image").bind("change", function() {
-    const size_in_megabytes = this.files[0].size/1024/1024;
-    if (size_in_megabytes > 5) {
-      alert("Maximum file size is 5MB. Please choose a smaller file.");
-      $("#micropost_image").val("");
-    }
-  });
-</script>
-

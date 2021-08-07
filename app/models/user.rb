@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :posts, dependent: :destroy
+  has_many :comments
   has_many :likes
   has_many :posts_liked, -> {where(likes: {liked:true})}, through: :likes, source: :post
   has_many :posts_disliked, -> {where(likes: {liked:false})}, through: :likes, source: :post

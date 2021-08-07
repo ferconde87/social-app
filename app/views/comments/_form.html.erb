@@ -1,0 +1,19 @@
+<div class="accordion" id="accordionFlush">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-heading">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse" aria-expanded="false" aria-controls="flush-collapse">
+        Make a comment here...
+      </button>
+    </h2>
+    <div id="flush-collapse" class="accordion-collapse collapse show" aria-labelledby="flush-heading" data-bs-parent="#accordionFlush">
+      <%= form_with(model: current_user.comments.build(post: @post), local: true) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        <div class="mx-auto">
+            <%= hidden_field_tag :post_id, post_id %>
+            <%= f.text_area :content, id: 'comment-form', placeholder: 'Write a comment...', class: "form-control mb-2", style: "height: 60px", :required => true %>
+          <%= f.submit "Comment", class: "btn btn-primary px-5 w-100" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
