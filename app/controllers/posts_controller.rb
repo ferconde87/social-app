@@ -7,7 +7,7 @@ class PostsController < ApplicationController
     @post.image.attach(params[:post][:image])
     if @post.save
       flash[:success] = "New post created!"
-      redirect_to root_url
+      redirect_back(fallback_location: root_url)
     else
       @feed_items = current_user.feed.paginate(page: params[:page])
       render 'static_pages/home'
@@ -20,7 +20,7 @@ class PostsController < ApplicationController
       redirect_back(fallback_location: root_url)
     else
       flash[:info] = "Unable to delete the post"
-      render 'static_pages/home'
+      render root_path
     end
   end
 

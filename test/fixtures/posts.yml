@@ -56,3 +56,8 @@ moni:
   content: "¡Moni!"
   created_at: <%= 1.minute.ago %>
   user: pepe
+
+unique: 
+  content: "Hey, I'm the only post of Homer"
+  created_at: <%= 1.hour.ago %>
+  user: homero

@@ -6,7 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
 # Create a main sample user.
 User.create!(
   name: "Fernando Conde",
@@ -53,13 +52,47 @@ users = User.order(:created_at).take(20)
 posts_number = 40
 posts = Post.order(:created_at).take(posts_number)
 users.each do |user|
-  rand(1..posts_number).times do |index|
-    user.like_post posts[index]
+  rand(20..posts_number).times do |index|
+    random_index = rand(posts_number)
+    user.like_post posts[random_index] unless user.like_post? posts[random_index]
   end
 end
 
 users.each do |user|
   rand(1..posts_number).times do |index|
-    user.dislike_post posts[index] unless user.like? posts[index]
+    random_index = rand(posts_number)
+    if !user.like_post?(posts[random_index]) && !user.dislike_post?(posts[random_index])
+      user.dislike_post posts[index]
+    end
+  end
+end
+
+# Create comments on posts
+users.each do |user|
+  rand(10..40).times do
+    random_index = rand(posts_number)
+    content = Faker::Lorem.sentence(word_count: rand(1..20))
+    seconds_ago = Time.now - posts[random_index].created_at
+    created_at = rand(1..seconds_ago).seconds.ago
+    user.comments.create!(post: posts[random_index], content: content, created_at: created_at)
+  end
+end
+
+# Create likes and dislikes for comments
+comments_number = 100
+comments = Comment.order(:created_at).take(comments_number)
+users.each do |user|
+  rand(40..comments_number).times do
+    random_index = rand(comments_number)
+    user.like_comment comments[random_index] unless user.like_comment? comments[random_index]
+  end
+end
+
+users.each do |user|
+  rand(10..comments_number).times do |index|
+    random_index = rand(comments_number)
+    if !user.like_comment?(comments[comments_number]) &&  !user.dislike_comment?(comments[comments_number])
+      user.dislike_comment comments[index]
+    end
   end
 end

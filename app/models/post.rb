@@ -23,5 +23,4 @@ class Post < ApplicationRecord
   def dislikes_count
     likes.select{ |l| !l.liked }.length
   end
-  
 end

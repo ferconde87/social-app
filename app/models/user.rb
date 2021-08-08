@@ -1,9 +1,11 @@
 class User < ApplicationRecord
+  has_many :comments, dependent: :destroy
   has_many :posts, dependent: :destroy
-  has_many :comments
   has_many :likes
-  has_many :posts_liked, -> {where(likes: {liked:true})}, through: :likes, source: :post
-  has_many :posts_disliked, -> {where(likes: {liked:false})}, through: :likes, source: :post
+  has_many :posts_liked, -> {where(likes: {liked:true,comment:nil})}, through: :likes, source: :post
+  has_many :posts_disliked, -> {where(likes: {liked:false,comment:nil})}, through: :likes, source: :post
+  has_many :comments_liked, -> {where(likes: {liked:true,post:nil})}, through: :likes, source: :comment
+  has_many :comments_disliked, -> {where(likes: {liked:false,post:nil})}, through: :likes, source: :comment
   has_one_attached :image
   attr_accessor :remember_token, :activation_token, :password_reset_token
   before_save :downcase_email
@@ -127,35 +129,68 @@ class User < ApplicationRecord
   end
 
   # User likes post ?
-  def like?(post)
+  def like_post?(post)
     posts_liked.include?(post)
   end
 
   # User dislikes post ?
-  def dislike?(post)
+  def dislike_post?(post)
     posts_disliked.include?(post)
   end
 
   # User likes a post
   def like_post(post)
-    posts_liked << post if !like? post
+    posts_liked << post if !like_post? post
     posts_disliked.delete post 
   end
   
   # User dislikes a post
   def dislike_post(post)
-    posts_disliked << post if !dislike? post
+    posts_disliked << post if !dislike_post? post
     posts_liked.delete post
   end
 
   # User cancel a previous like post
-  def cancel_like(post)
+  def cancel_like_post(post)
     posts_liked.delete post
   end
 
   # User cancel a previous dislike post
-  def cancel_dislike(post)
+  def cancel_dislike_post(post)
     posts_disliked.delete post
+  end
+
+  # TODO DRY join unify comments & post methods  
+  # User likes comment ?
+  def like_comment?(comment)
+    comments_liked.include?(comment)
+  end
+
+  # User dislikes comment ?
+  def dislike_comment?(comment)
+    comments_disliked.include?(comment)
+  end
+
+  # User likes a comment
+  def like_comment(comment)
+    comments_liked << comment if !like_comment? comment
+    comments_disliked.delete comment 
+  end
+  
+  # User dislikes a comment
+  def dislike_comment(comment)
+    comments_disliked << comment if !dislike_comment? comment
+    comments_liked.delete comment
+  end
+
+  # User cancel a previous like comment
+  def cancel_like_comment(comment)
+    comments_liked.delete comment
+  end
+
+  # User cancel a previous dislike comment
+  def cancel_dislike_comment(comment)
+    comments_disliked.delete comment
   end
   
   private

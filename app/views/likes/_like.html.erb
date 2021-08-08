@@ -1,20 +1,21 @@
 <div class="ms-auto">
-  <% if current_user.like? object %>
-    <%= link_to "/like/#{object.id}", method: :post, remote: true, class: 'text-decoration-none text-primary' do %>
-      <i class="bi bi-hand-thumbs-up-fill btn-like" id="like_<%=object.id%>"> <%= object.reload.likes_count %></i> 
+  <% name = object.class.model_name.singular %>
+  <% if current_user.send("like_#{name}?",object) %>
+    <%= link_to "/like_#{name}/#{object.id}", method: :post, remote: true, class: 'text-decoration-none text-primary' do %>
+      <i class="bi bi-hand-thumbs-up-fill btn-like" id="like_<%=name%>_<%=object.id%>"> <%= object.reload.likes_count %></i> 
     <% end %>
   <% else %>
-    <%= link_to "/like/#{object.id}", method: :post, remote: true, class: 'text-decoration-none text-primary' do %>
-        <i class="bi bi-hand-thumbs-up btn-like" id="like_<%=object.id%>"> <%= object.likes_count %></i> 
+    <%= link_to "/like_#{name}/#{object.id}", method: :post, remote: true, class: 'text-decoration-none text-primary' do %>
+        <i class="bi bi-hand-thumbs-up btn-like" id="like_<%=name%>_<%=object.id%>"> <%= object.likes_count %></i> 
     <% end %>
   <% end %>
-  <% if current_user.dislike? object %>
-    <%= link_to "/dislike/#{object.id}", method: :post, remote: true, class: 'text-decoration-none text-primary ms-2' do %>
-      <i class="bi bi-hand-thumbs-down-fill btn-like" id="dislike_<%=object.id%>">  <%= object.reload.dislikes_count %></i> 
+  <% if current_user.send("dislike_#{name}?", object) %>
+    <%= link_to "/dislike_#{name}/#{object.id}", method: :post, remote: true, class: 'text-decoration-none text-primary ms-2' do %>
+      <i class="bi bi-hand-thumbs-down-fill btn-like" id="dislike_<%=name%>_<%=object.id%>">  <%= object.reload.dislikes_count %></i> 
     <% end %>
   <% else %>
-    <%= link_to "/dislike/#{object.id}", method: :post, remote: true, class: 'text-decoration-none text-primary ms-2' do %>
-      <i class="bi bi-hand-thumbs-down btn-like" id="dislike_<%=object.id%>"> <%= object.reload.dislikes_count %></i> 
+    <%= link_to "/dislike_#{name}/#{object.id}", method: :post, remote: true, class: 'text-decoration-none text-primary ms-2' do %>
+      <i class="bi bi-hand-thumbs-down btn-like" id="dislike_<%=name%>_<%=object.id%>"> <%= object.reload.dislikes_count %></i> 
     <% end %>
   <% end %>
 </div>

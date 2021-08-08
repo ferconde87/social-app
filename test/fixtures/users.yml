@@ -36,6 +36,13 @@ pepe:
   activated: true
   activated_at: <%= Time.zone.now %>
 
+homero:
+  name: Homero Simpson
+  email: homero@simpson
+  password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
+
 <% 50.times do |n| %>
 user_<%= n %>:
   name: <%= "User #{n}" %>

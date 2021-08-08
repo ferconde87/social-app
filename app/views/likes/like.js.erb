@@ -1,5 +1,5 @@
-var like = document.getElementById("like_<%=@post.id%>");
-var dislike = document.getElementById("dislike_<%=@post.id%>");
+var like = document.getElementById("like_<%=@object.class.model_name.singular%>_<%=@object.id%>");
+var dislike = document.getElementById("dislike_<%=@object.class.model_name.singular%>_<%=@object.id%>");
 
 if (like.classList.contains("bi-hand-thumbs-up")) {
   like.classList.replace("bi-hand-thumbs-up", "bi-hand-thumbs-up-fill")
@@ -8,6 +8,6 @@ if (like.classList.contains("bi-hand-thumbs-up")) {
   like.classList.replace("bi-hand-thumbs-up-fill", "bi-hand-thumbs-up")
 }
 
-like.textContent = " " + <%= @post.likes_count%>
-dislike.textContent = " " + <%= @post.dislikes_count %>
+like.textContent = " " + <%= @object.likes_count%>
+dislike.textContent = " " + <%= @object.dislikes_count %>
 
