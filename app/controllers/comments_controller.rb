@@ -3,14 +3,28 @@ class CommentsController < ApplicationController
   before_action :correct_user, only: :destroy
 
   def create
-    current_user.comments.create(post_id: params[:post_id], content:  params[:comment][:content])
-    redirect_back(fallback_location: root_url)
+    respond_to do |format|
+      @comment = current_user.comments.create(post_id: params[:post_id], content:  params[:comment][:content].squish)
+      format.html { redirect_back fallback_location: root_url }
+      format.js
+    end
   end
 
   def destroy
-    if !@comment.destroy
-      flash[:info] = "Unable to delete the comment"
-      render root_path
+    # respond_to do |format|
+    #   if @comment.destroy
+    #     format.html { redirect_back fallback_location: root_url }
+    #     format.js { render 'destroy'}
+    #   else
+    #     flash[:info] = "Unable to delete the comment"
+    #     render root_path
+    #   end
+    # end
+    
+    respond_to do |format|  
+      @comment.destroy
+      format.html { redirect_back fallback_location: root_url }
+      format.js
     end
   end
 

@@ -1,0 +1,36 @@
+var comments = document.getElementById("post_comments_<%= @comment.post.id %>");
+debugger
+var div = document.createElement('div');
+var inner = document.createElement('div');
+inner.classList.add("d-flex", "align-items-end", "mb-2");
+var small = document.createElement('small');
+small.classList.add("text-muted");
+small.appendChild(document.createTextNode("<%= time_ago_in_words(@comment.created_at) %> ago."));
+inner.appendChild(small);
+inner.insertAdjacentHTML( 'beforeend', "<%= j render(:partial => "likes/like", locals: { object: @comment }) %>" );
+div.appendChild(inner);
+comments.insertBefore(div, comments.firstChild);
+
+<% if current_user?(@comment.user) %>
+var close = document.createElement('div');
+close.classList.add("card-text", "col-md-1", "text-end");
+var a = document.createElement('a');
+a.setAttribute("data-confirm", "Are you sure you want to delete the comment?");
+a.classList.add("btn", "btn-sm", "btn-close", "btn-danger");
+a.setAttribute("rel", "nofollow");
+a.setAttribute("data-method", "delete");
+a.setAttribute("href", "/comments/<%= @comment.id %>");
+close.appendChild(a);
+comments.insertBefore(close, comments.firstChild);
+<% end %>
+
+var comment = document.createElement('div');
+comment.classList.add("card-text", "col-md-11", "align-self-center");
+comment.innerHTML = "<%= @comment.user.name %>: <%= @comment.content %>";
+comments.insertBefore(comment, comments.firstChild);
+
+var hr = document.createElement('hr');
+hr.classList.add("mb-2");
+comments.insertBefore(hr, comments.firstChild);
+
+document.getElementById("comment_form_<%= @comment.post.id %>").value = "";

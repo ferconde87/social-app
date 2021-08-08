@@ -1,0 +1,9 @@
+var comment = document.getElementById("comment_<%= @comment.id %>");
+var divisor = comment.previousElementSibling;
+var close = comment.nextElementSibling;
+var likesAndTimePosted = close.nextElementSibling;
+
+divisor.remove();
+close.remove();
+likesAndTimePosted.remove();
+comment.remove();

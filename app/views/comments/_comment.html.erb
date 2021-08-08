@@ -1,11 +1,11 @@
 <hr class="mb-2"> 
-<div class="card-text col-md-11 align-self-center">
+<div class="card-text col-md-11 align-self-center" id="comment_<%= comment.id %>">
   <%= comment.user.name %>:
   <%= comment.content %>      
 </div>
 <% if current_user?(comment.user) %>
   <div class="card-text col-md-1 text-end">
-    <%= link_to "", comment, method: :delete, data: { confirm: "Are you sure you want to delete the comment?" }, class: "btn btn-sm btn-close btn-danger" %>
+    <%= link_to "", comment, method: :delete, data: { confirm: "Are you sure you want to delete the comment?" }, class: "btn btn-sm btn-close btn-danger", remote: true %>
   </div>
 <% end %>
 <div>
@@ -16,5 +16,3 @@
     <%= render partial: 'likes/like', locals: { object: comment } %>
   </div>
 </div>
-
-

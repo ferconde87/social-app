@@ -34,7 +34,7 @@
   <div class="row card-body">
     <%= render partial: 'comments/form', locals: { post_id: post.id } %>
   </div>
-  <div class="row card-body py-0">
+  <div class="row card-body py-0" id="post_comments_<%= post.id %>">
     <%= render post.comments %>
   </div>
 </div>

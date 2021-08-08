@@ -6,11 +6,11 @@
       </button>
     </h2>
     <div id="flush-collapse" class="accordion-collapse collapse show" aria-labelledby="flush-heading" data-bs-parent="#accordionFlush">
-      <%= form_with(model: current_user.comments.build(post: @post), local: true) do |f| %>
+      <%= form_with(model: current_user.comments.build(post: @post), local: false) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
         <div class="mx-auto">
             <%= hidden_field_tag :post_id, post_id %>
-            <%= f.text_area :content, id: 'comment-form', placeholder: 'Write a comment...', class: "form-control mb-2", style: "height: 60px", :required => true %>
+            <%= f.text_area :content, id: "comment_form_#{post_id}", placeholder: 'Write a comment...', class: "form-control mb-2", style: "height: 60px", :required => true %>
           <%= f.submit "Comment", class: "btn btn-primary px-5 w-100" %>
         </div>
       <% end %>

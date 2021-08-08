@@ -1,0 +1,3 @@
+var comments = document.getElementById("post_comments_<%= @comment.post.id %>");
+comments.insertAdjacentHTML( 'afterbegin', "<%= j render @comment %>" );
+document.getElementById("comment_form_<%= @comment.post.id %>").value = "";
