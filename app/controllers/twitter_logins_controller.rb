@@ -3,7 +3,8 @@ class TwitterLoginsController < LoginsController
   end
   
   def create
-    user = User.find_by(twitter_id: auth_hash.uid)
+    id = auth_hash.uid
+    user = User.find_by(twitter_id: id)
     email = auth_hash.info.email
     if user.nil? && !email.nil?
       if user = User.find_by(email: email)
@@ -13,8 +14,8 @@ class TwitterLoginsController < LoginsController
     if user.nil?
       user_info = {}
       user_info[:name] = auth_hash.info.name
-      user_info[:email] = email.nil? ? "#{auth_hash.uid}@fb.com"  : email
-      user_info[:twitter_id] = auth_hash.uid
+      user_info[:email] = email.nil? ? "#{id}@fb.com"  : email
+      user_info[:twitter_id] = id
       user = create_user(user_info)
       login(user, signup_message)
     else
