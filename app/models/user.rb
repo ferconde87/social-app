@@ -98,8 +98,9 @@ class User < ApplicationRecord
 
   # Defines a proto-feed.
   def feed
-    #Post.where("user_id IN (?)", following_ids)  #it doesn't scale! cuz it's pulling all users in a potentially big array 'self.following_ids'
+    #Post.where("user_id IN (?)", following_ids)  # <= this way doesn't scale! cuz it's pulling all users in a potentially big array 'self.following_ids'
     following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+    # Post.includes({comments: :likes}, :likes).where("user_id IN (#{following_ids})", user_id: id) # Using eager loading...
     Post.where("user_id IN (#{following_ids})", user_id: id)
   end
 
