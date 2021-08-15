@@ -1,7 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# one:
-#   content: MyString
+hola:
+  content: "Hola!"
+  post: with_comments
+  user: bob
+  created_at: <%= 1.hour.ago %>
 
-# two:
-#   content: MyString
+now:
+  content: "Hola ahora!"
+  post: with_comments
+  user: bob
+  created_at: <%= Time.zone.now %>
+
+chau:
+  content: "Chau!"
+  post: with_comments
+  user: bob
+  created_at: <%= 1.minute.ago %>

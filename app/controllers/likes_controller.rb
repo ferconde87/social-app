@@ -1,50 +1,25 @@
 class LikesController < ApplicationController
   before_action :logged_in_user
-  before_action :current_post, only: [:like_post, :dislike_post]
-  before_action :current_comment, only: [:like_comment, :dislike_comment]
+  before_action :current_content, only: [:like, :dislike]
 
-  def like_post
+  def like
     respond_to do |format|
-      if !current_user.like_post? @post
-        current_user.like_post @post
+      if !current_user.like? @content
+        current_user.like @content
       else
-        current_user.cancel_like_post @post
+        current_user.cancel_like @content
       end
       format.html { redirect_back fallback_location: root_url }
       format.js { render 'like'}
     end
   end
 
-  def dislike_post
+  def dislike
     respond_to do |format|
-      if !current_user.dislike_post? @post
-        current_user.dislike_post @post
+      if !current_user.dislike? @content
+        current_user.dislike @content
       else
-        current_user.cancel_dislike_post @post
-      end
-      format.html { redirect_back fallback_location: root_url }
-      format.js { render 'dislike' }
-    end
-  end
-
-  def like_comment
-    respond_to do |format|
-      if !current_user.like_comment? @comment
-        current_user.like_comment @comment
-      else
-        current_user.cancel_like_comment @comment
-      end
-      format.html { redirect_back fallback_location: root_url }
-      format.js { render 'like'}
-    end
-  end
-
-  def dislike_comment
-    respond_to do |format|
-      if !current_user.dislike_comment? @comment
-        current_user.dislike_comment @comment
-      else
-        current_user.cancel_dislike_comment @comment
+        current_user.cancel_dislike @content
       end
       format.html { redirect_back fallback_location: root_url }
       format.js { render 'dislike' }
@@ -53,13 +28,9 @@ class LikesController < ApplicationController
 
   private
   
-  def current_post
-    @post ||= Post.find(params[:id])
-    @object = @post
-  end
-
-  def current_comment
-    @comment ||= Comment.find(params[:id])
-    @object = @comment
+  def current_content
+    content_class_name = params[:content].capitalize
+    @content ||= content_class_name.constantize.find(params[:id])
+    @object = @content
   end
 end

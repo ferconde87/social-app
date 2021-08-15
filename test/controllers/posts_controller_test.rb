@@ -22,7 +22,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_url
   end
 
-  test "should redirect destroy for wrong post" do
+  test "should redirect destroy when trying to delete a post from other user" do
     log_in_as(users(:fernando))
     post = posts(:ants)
     assert_no_difference 'Post.count' do

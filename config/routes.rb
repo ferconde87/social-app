@@ -21,14 +21,10 @@ Rails.application.routes.draw do
   resources :posts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
   resources :comments, only: [:create, :destroy]
-  post '/like_post/:id', to: 'likes#like_post'
-  post '/cancel_like_post/:id', to: 'likes#cancel_like_post'
-  post '/dislike_post/:id', to: 'likes#dislike_post'
-  post '/cancel_dislike_post/:id', to: 'likes#cancel_dislike_post'
-  post '/like_comment/:id', to: 'likes#like_comment'
-  post '/cancel_like_comment/:id', to: 'likes#cancel_like_comment'
-  post '/dislike_comment/:id', to: 'likes#dislike_comment'
-  post '/cancel_dislike_comment/:id', to: 'likes#cancel_dislike_comment'
+  post '/like/:content/:id', to: 'likes#like'
+  post '/cancel_like/:content/:id', to: 'likes#cancel_like'
+  post '/dislike/:content/:id', to: 'likes#dislike'
+  post '/cancel_dislike/:content/:id', to: 'likes#cancel_dislike'
   #google-sign-in
   get 'google_login', to: 'google_logins#new'
   get 'google_login/create', to: 'google_logins#create', as: :google_create_login

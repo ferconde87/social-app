@@ -129,69 +129,37 @@ class User < ApplicationRecord
     update_columns("#{name}": value, activated: true, activated_at: Time.zone.now)
   end
 
-  # User likes post ?
-  def like_post?(post)
-    posts_liked.include?(post)
+  # User likes content ?
+  def like?(content)
+    send("#{content.class.model_name.plural}_liked").include?(content)
   end
 
   # User dislikes post ?
-  def dislike_post?(post)
-    posts_disliked.include?(post)
+  def dislike?(content)
+    send("#{content.class.model_name.plural}_disliked").include?(content)
   end
 
   # User likes a post
-  def like_post(post)
-    posts_liked << post if !like_post? post
-    posts_disliked.delete post 
+  def like(content)
+    # posts_liked << post if !like? post
+    send("#{content.class.model_name.plural}_liked") << content if !like? content
+    send("#{content.class.model_name.plural}_disliked").delete content 
   end
   
   # User dislikes a post
-  def dislike_post(post)
-    posts_disliked << post if !dislike_post? post
-    posts_liked.delete post
+  def dislike(content)
+    send("#{content.class.model_name.plural}_disliked") << content if !dislike? content
+    send("#{content.class.model_name.plural}_liked").delete content
   end
 
   # User cancel a previous like post
-  def cancel_like_post(post)
-    posts_liked.delete post
+  def cancel_like(content)
+    send("#{content.class.model_name.plural}_liked").delete content
   end
 
   # User cancel a previous dislike post
-  def cancel_dislike_post(post)
-    posts_disliked.delete post
-  end
-
-  # TODO DRY join unify comments & post methods  
-  # User likes comment ?
-  def like_comment?(comment)
-    comments_liked.include?(comment)
-  end
-
-  # User dislikes comment ?
-  def dislike_comment?(comment)
-    comments_disliked.include?(comment)
-  end
-
-  # User likes a comment
-  def like_comment(comment)
-    comments_liked << comment if !like_comment? comment
-    comments_disliked.delete comment 
-  end
-  
-  # User dislikes a comment
-  def dislike_comment(comment)
-    comments_disliked << comment if !dislike_comment? comment
-    comments_liked.delete comment
-  end
-
-  # User cancel a previous like comment
-  def cancel_like_comment(comment)
-    comments_liked.delete comment
-  end
-
-  # User cancel a previous dislike comment
-  def cancel_dislike_comment(comment)
-    comments_disliked.delete comment
+  def cancel_dislike(content)
+    send("#{content.class.model_name.plural}_disliked").delete content
   end
   
   private

@@ -61,3 +61,8 @@ unique:
   content: "Hey, I'm the only post of Homer"
   created_at: <%= 1.hour.ago %>
   user: homero
+
+with_comments:
+  content: "I'm a post with comments"
+  created_at: <%= 1.day.ago %>
+  user: bob

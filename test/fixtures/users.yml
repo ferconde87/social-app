@@ -43,6 +43,14 @@ homero:
   activated: true
   activated_at: <%= Time.zone.now %>
 
+bob:
+  name: Bob Example
+  email: bob@example.com
+  password_digest: <%= User.digest('password') %>
+  admin: true
+  activated: true
+  activated_at: <%= Time.zone.now %>
+
 <% 50.times do |n| %>
 user_<%= n %>:
   name: <%= "User #{n}" %>
@@ -51,3 +59,5 @@ user_<%= n %>:
   activated: true
   activated_at: <%= Time.zone.now %>
 <% end %>
+
+
