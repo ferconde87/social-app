@@ -8,11 +8,14 @@ module Content
 
   # Count likes
   def likes_count
-    likes.select{ |l| l.liked }.length
+    # likes.select{ |l| l.liked }.length
+    # debugger
+    likes_counter
   end
 
   # Count dislikes
   def dislikes_count
-    likes.select{ |l| !l.liked }.length
+    # likes.select{ |l| !l.liked }.length
+    dislikes_counter
   end
 end

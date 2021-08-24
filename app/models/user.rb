@@ -131,35 +131,69 @@ class User < ApplicationRecord
 
   # User likes content ?
   def like?(content)
-    send("#{content.class.model_name.plural}_liked").include?(content)
+    # send("#{content.class.model_name.plural}_liked").include?(content)
+    # !likes.find_by("#{content.class.model_name.singular}_id": content.id, liked: true).nil?
+    !likes.find {|like| like.send("#{content.class.model_name.singular}_id") == content.id}.nil?
   end
 
   # User dislikes post ?
   def dislike?(content)
-    send("#{content.class.model_name.plural}_disliked").include?(content)
+    # send("#{content.class.model_name.plural}_disliked").include?(content)
+    # !likes.find_by("#{content.class.model_name.singular}_id": content.id, liked: false).nil?
+    !likes.find {|like| like.send("#{content.class.model_name.singular}_id") == content.id && like.liked == false }.nil?
   end
 
   # User likes a post
   def like(content)
     # posts_liked << post if !like? post
-    send("#{content.class.model_name.plural}_liked") << content if !like? content
-    send("#{content.class.model_name.plural}_disliked").delete content 
+    if !like? content
+      # send("#{content.class.model_name.plural}_liked") << content if !like? content
+      likes.create!("#{content.class.model_name.singular}_id": content.id, liked: true)
+      content.likes_counter += 1
+      content.save
+    end
+    if dislike? content
+      # send("#{content.class.model_name.plural}_disliked").delete content 
+      likes.find_by("#{content.class.model_name.singular}_id": content.id).destroy
+      content.dislikes_counter -= 1
+      content.save
+    end
   end
   
   # User dislikes a post
   def dislike(content)
-    send("#{content.class.model_name.plural}_disliked") << content if !dislike? content
-    send("#{content.class.model_name.plural}_liked").delete content
+    if !dislike? content
+      # send("#{content.class.model_name.plural}_disliked") << content 
+      likes.create!("#{content.class.model_name.singular}_id": content.id, liked: false)
+      content.dislikes_counter += 1
+      content.save
+    end
+    if like? content
+      # send("#{content.class.model_name.plural}_liked").delete content 
+      likes.find_by("#{content.class.model_name.singular}_id": content.id).destroy
+      content.likes_counter -= 1
+      content.save
+    end
   end
 
   # User cancel a previous like post
   def cancel_like(content)
-    send("#{content.class.model_name.plural}_liked").delete content
+    if like? content
+      # send("#{content.class.model_name.plural}_liked").delete content
+      likes.find_by("#{content.class.model_name.singular}_id": content.id).destroy
+      content.likes_counter -= 1
+      content.save
+    end
   end
 
   # User cancel a previous dislike post
   def cancel_dislike(content)
-    send("#{content.class.model_name.plural}_disliked").delete content
+    if dislike? content
+      # send("#{content.class.model_name.plural}_disliked").delete content
+      likes.find_by("#{content.class.model_name.singular}_id": content.id).destroy
+      content.dislikes_counter -= 1
+      content.save
+    end
   end
   
   private

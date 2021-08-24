@@ -32,7 +32,7 @@ class UserLikesCommentTest < ActionDispatch::IntegrationTest
     assert_select 'i.bi.bi-hand-thumbs-up-fill', count: 0
     assert_select 'i.bi.bi-hand-thumbs-up', count: 4 #1 post + 3 comments
     assert_select 'i.bi.bi-hand-thumbs-up', text: "1"
-    assert_difference '@fer.comments_liked.length', 1 do
+    assert_difference '@fer.likes.length', 1 do
       @fer.like @comment2
     end
     assert @fer.like? @comment2

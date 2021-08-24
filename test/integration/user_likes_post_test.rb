@@ -9,6 +9,12 @@ class UserLikesPostTest < ActionDispatch::IntegrationTest
     @homero = users(:homero)
     @unique = posts(:unique)
     log_in_as(@fer)
+    
+    @lana = users(:lana)
+    @lana.like @zone
+    @michael.dislike @zone
+    @malory = users(:malory)
+    @malory.like @zone
   end
 
   test "user likes a post" do
@@ -30,15 +36,15 @@ class UserLikesPostTest < ActionDispatch::IntegrationTest
     assert_template 'users/show'
     assert_select 'i.bi.bi-hand-thumbs-up-fill', count: 0
     assert_select 'i.bi.bi-hand-thumbs-up', count: 2
-    assert_select 'i.bi.bi-hand-thumbs-up', text: "2"
-    assert_difference '@fer.posts_liked.length', 1 do
+    # assert_select 'i.bi.bi-hand-thumbs-up', text: "2"
+    assert_difference '@fer.likes.length', 1 do
       @fer.like @zone
     end
     assert @fer.like?(@zone)
     get user_path(@michael)
     assert_select 'i.bi.bi-hand-thumbs-up-fill', count: 1
-    assert_select 'i.bi.bi-hand-thumbs-up-fill', text: "3"
-    assert_select 'i.bi.bi-hand-thumbs-up', count: 1
+    # assert_select 'i.bi.bi-hand-thumbs-up-fill', text: "3"
+    # assert_select 'i.bi.bi-hand-thumbs-up', count: 1
     
     # TODO update Like instead of using post_liked & post_not_liked
     assert_not @fer.dislike? @zone
@@ -68,5 +74,37 @@ class UserLikesPostTest < ActionDispatch::IntegrationTest
     @fer.dislike @unique
     get user_path(@homero)
     assert_select "a[href=?]", "/dislike/post/#{@unique.id}"
+  end
+
+  test "number of likes and dislikes" do
+    #like
+    assert_not @fer.like?(@unique)
+    assert_equal 0, @unique.likes_counter
+    @fer.like @unique
+    assert_equal 1, @unique.likes_counter
+    assert_not @homero.like(@unique)
+    @homero.like @unique
+    assert_equal 2, @unique.likes_counter
+    #dislike
+    assert_equal 0, @unique.dislikes_counter
+    @homero.dislike @unique
+    assert_equal 1, @unique.dislikes_counter
+    assert_equal 1, @unique.likes_counter
+    @fer.dislike @unique
+    assert_equal 2, @unique.dislikes_counter
+    assert_equal 0, @unique.likes_counter
+    #cancel_dislike
+    @fer.cancel_dislike @unique
+    assert_equal 1, @unique.dislikes_counter
+    @homero.cancel_dislike @unique
+    assert_equal 0, @unique.dislikes_counter
+    #cancel_like
+    @fer.like @unique
+    @homero.like @unique
+    assert_equal 2, @unique.likes_counter
+    @fer.cancel_like @unique
+    assert_equal 1, @unique.likes_counter
+    @homero.cancel_like @unique
+    assert_equal 0, @unique.likes_counter
   end
 end
