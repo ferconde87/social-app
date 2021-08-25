@@ -82,7 +82,7 @@ class UserLikesPostTest < ActionDispatch::IntegrationTest
     assert_equal 0, @unique.likes_counter
     @fer.like @unique
     assert_equal 1, @unique.likes_counter
-    assert_not @homero.like(@unique)
+    assert_not @homero.like?(@unique)
     @homero.like @unique
     assert_equal 2, @unique.likes_counter
     #dislike

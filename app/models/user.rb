@@ -101,7 +101,7 @@ class User < ApplicationRecord
     #Post.where("user_id IN (?)", following_ids)  # <= this way doesn't scale! cuz it's pulling all users in a potentially big array 'self.following_ids'
     following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
     # Post.includes({comments: :likes}, :likes).where("user_id IN (#{following_ids})", user_id: id) # Using eager loading...
-    Post.where("user_id IN (#{following_ids})", user_id: id)
+    Post.includes(:comments => :user).where("user_id IN (#{following_ids})", user_id: id)
   end
 
   # Follows a user.
@@ -133,7 +133,7 @@ class User < ApplicationRecord
   def like?(content)
     # send("#{content.class.model_name.plural}_liked").include?(content)
     # !likes.find_by("#{content.class.model_name.singular}_id": content.id, liked: true).nil?
-    !likes.find {|like| like.send("#{content.class.model_name.singular}_id") == content.id}.nil?
+    !likes.find {|like| like.send("#{content.class.model_name.singular}_id") == content.id && like.liked == true}.nil?
   end
 
   # User dislikes post ?
@@ -154,14 +154,16 @@ class User < ApplicationRecord
     end
     if dislike? content
       # send("#{content.class.model_name.plural}_disliked").delete content 
-      likes.find_by("#{content.class.model_name.singular}_id": content.id).destroy
+      likes.find_by("#{content.class.model_name.singular}_id": content.id, liked: false).destroy
       content.dislikes_counter -= 1
       content.save
     end
+    likes.reload
   end
   
   # User dislikes a post
   def dislike(content)
+
     if !dislike? content
       # send("#{content.class.model_name.plural}_disliked") << content 
       likes.create!("#{content.class.model_name.singular}_id": content.id, liked: false)
@@ -170,19 +172,21 @@ class User < ApplicationRecord
     end
     if like? content
       # send("#{content.class.model_name.plural}_liked").delete content 
-      likes.find_by("#{content.class.model_name.singular}_id": content.id).destroy
+      likes.find_by("#{content.class.model_name.singular}_id": content.id, liked: true).destroy
       content.likes_counter -= 1
       content.save
     end
+    likes.reload
   end
 
   # User cancel a previous like post
   def cancel_like(content)
     if like? content
       # send("#{content.class.model_name.plural}_liked").delete content
-      likes.find_by("#{content.class.model_name.singular}_id": content.id).destroy
+      likes.find_by("#{content.class.model_name.singular}_id": content.id, liked: true).destroy
       content.likes_counter -= 1
       content.save
+      likes.reload
     end
   end
 
@@ -190,9 +194,10 @@ class User < ApplicationRecord
   def cancel_dislike(content)
     if dislike? content
       # send("#{content.class.model_name.plural}_disliked").delete content
-      likes.find_by("#{content.class.model_name.singular}_id": content.id).destroy
+      likes.find_by("#{content.class.model_name.singular}_id": content.id, liked: false).destroy
       content.dislikes_counter -= 1
       content.save
+      likes.reload
     end
   end
   

@@ -20,13 +20,13 @@ class LikeTest < ActiveSupport::TestCase
     assert @user.dislike? @post
   end
 
-  test "user likes a post and then doesn't like it" do
+  test "user likes a post and then does not like it" do
     @user.like @post
     assert @user.like? @post
     assert_not @user.dislike? @post
     @user.dislike @post
     assert @user.dislike? @post
-    assert_not @user.like? @post
+    assert_not @user.reload.like? @post
   end
 
   test "user dislikes a post and then like it" do

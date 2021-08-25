@@ -62,7 +62,8 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
     assert_difference 'Like.count', -1 do
       post "/like/post/#{@pepe_post1.id}"
     end
-    
+
+    @user.likes.reload
     assert_not @user.like? @pepe_post1
     get user_path(@pepe)
     assert_select 'i.bi.bi-hand-thumbs-up-fill', count: 0
@@ -82,7 +83,7 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
     assert_difference 'Like.count', -1 do
       post "/dislike/post/#{@pepe_post1.id}"
     end
-    
+    @user.likes.reload
     assert_not @user.dislike? @pepe_post1
     get user_path(@pepe)
     assert_select 'i.bi.bi-hand-thumbs-down-fill', count: 0
