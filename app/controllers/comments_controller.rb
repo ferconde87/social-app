@@ -11,21 +11,21 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    # respond_to do |format|
-    #   if @comment.destroy
-    #     format.html { redirect_back fallback_location: root_url }
-    #     format.js { render 'destroy'}
-    #   else
-    #     flash[:info] = "Unable to delete the comment"
-    #     render root_path
-    #   end
-    # end
-    
-    respond_to do |format|  
-      @comment.destroy
-      format.html { redirect_back fallback_location: root_url }
-      format.js
+    respond_to do |format|
+      if @comment.destroy
+        format.html { redirect_back fallback_location: root_url }
+        format.js { render 'destroy'}
+      else
+        flash[:info] = "Unable to delete the comment"
+        render root_path
+      end
     end
+    
+    # respond_to do |format|  
+    #   @comment.destroy
+    #   format.html { redirect_back fallback_location: root_url }
+    #   format.js
+    # end
   end
 
   private

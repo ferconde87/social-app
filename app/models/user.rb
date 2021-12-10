@@ -66,9 +66,6 @@ class User < ApplicationRecord
 
   # Activates an account.
   def activate
-    # update_attribute(:activated, true)
-    # update_attribute(:activated_at, Time.zone.now)
-    # update_columns hits the database only one
     update_columns(activated: true, activated_at: Time.zone.now)
   end
   
@@ -163,7 +160,6 @@ class User < ApplicationRecord
   
   # User dislikes a post
   def dislike(content)
-
     if !dislike? content
       # send("#{content.class.model_name.plural}_disliked") << content 
       likes.create!("#{content.class.model_name.singular}_id": content.id, liked: false)

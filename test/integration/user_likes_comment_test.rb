@@ -70,4 +70,16 @@ class UserLikesCommentTest < ActionDispatch::IntegrationTest
     get user_path(@bob)
     assert_select "a[href=?]", "/dislike/comment/#{@comment3.id}"
   end
+
+  test "user likes his/her own comment and then they delete the comment" do
+    assert_not @bob.like? @comment1
+    assert_difference '@bob.likes.count', 1 do
+      @bob.like @comment1
+    end
+    assert @bob.like? @comment1
+    assert_difference '@bob.likes.count', -1 do
+      @comment1.destroy
+    end
+    assert @bob.like? @comment1
+  end
 end
