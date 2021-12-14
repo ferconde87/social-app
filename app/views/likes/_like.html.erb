@@ -1,7 +1,7 @@
 <div class="ms-auto">
   <% name = object.class.model_name.singular %>
   <%= hidden_field_tag :object, object %>
-  <% if current_user.send("like?",object) %>
+  <% if Like.send("like?", current_user ,object) %>
     <%= link_to "/like/#{object.model_name.singular}/#{object.id}", method: :post, remote: true, class: 'text-decoration-none text-primary' do %>
       <i class="bi bi-hand-thumbs-up-fill btn-like" id="like_<%=name%>_<%=object.id%>"> <%= object.likes_count %></i> 
     <% end %>
@@ -10,7 +10,7 @@
         <i class="bi bi-hand-thumbs-up btn-like" id="like_<%=name%>_<%=object.id%>"> <%= object.likes_count %></i> 
     <% end %>
   <% end %>
-  <% if current_user.send("dislike?", object) %>
+  <% if Like.send("dislike?", current_user, object) %>
     <%= link_to "/dislike/#{object.model_name.singular}/#{object.id}", method: :post, remote: true, class: 'text-decoration-none text-primary ms-2' do %>
       <i class="bi bi-hand-thumbs-down-fill btn-like" id="dislike_<%=name%>_<%=object.id%>">  <%= object.dislikes_count %></i> 
     <% end %>

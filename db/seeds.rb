@@ -54,15 +54,15 @@ posts = Post.order(:created_at).take(posts_number)
 users.each do |user|
   rand(20..posts_number).times do |index|
     random_index = rand(posts_number)
-    user.like posts[random_index] unless user.like? posts[random_index]
+    Like.like(user, posts[random_index]) unless Like.like?(user, posts[random_index])
   end
 end
 
 users.each do |user|
   rand(1..posts_number).times do |index|
     random_index = rand(posts_number)
-    if !user.like?(posts[random_index]) && !user.dislike?(posts[random_index])
-      user.dislike posts[index]
+    if !Like.like?(user, (posts[random_index])) && !Like.dislike?(user, posts[random_index])
+      Like.dislike(user, posts[index])
     end
   end
 end
@@ -84,15 +84,15 @@ comments = Comment.order(:created_at).take(comments_number)
 users.each do |user|
   rand(40..comments_number).times do
     random_index = rand(comments_number)
-    user.like comments[random_index] unless user.like? comments[random_index]
+    Like.like(user, comments[random_index]) unless Like.like?(user, comments[random_index])
   end
 end
 
 users.each do |user|
   rand(10..comments_number).times do |index|
     random_index = rand(comments_number)
-    if !user.like?(comments[random_index]) &&  !user.dislike?(comments[random_index])
-      user.dislike comments[index]
+    if !Like.like?(user, (comments[random_index])) &&  !Like.dislike?(user, comments[random_index])
+      Like.dislike(user, comments[index])
     end
   end
 end

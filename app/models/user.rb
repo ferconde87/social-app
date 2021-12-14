@@ -123,50 +123,6 @@ class User < ApplicationRecord
   def activate_with_atttribute(name, value)
     update_columns("#{name}": value, activated: true, activated_at: Time.zone.now)
   end
-
-  def like?(content)
-    !likes.find {|like| like.send("#{content.class.model_name.singular}_id") == content.id && like.liked == true}.nil?
-  end
-
-  def dislike?(content)
-    !likes.find {|like| like.send("#{content.class.model_name.singular}_id") == content.id && like.liked == false }.nil?
-  end
-
-  def like(content)
-    cancel_dislike content
-    return if like? content
-    likes.create!("#{content.class.model_name.singular}_id": content.id, liked: true)
-    content.likes_counter += 1
-    content.save
-    likes.reload
-  end
-  
-  def dislike(content)
-    cancel_like content
-    return if dislike? content
-    likes.create!("#{content.class.model_name.singular}_id": content.id, liked: false)
-    content.dislikes_counter += 1
-    content.save
-    likes.reload
-  end
-
-  # User cancel a previous like post
-  def cancel_like(content)
-    return if !like? content
-    likes.find_by("#{content.class.model_name.singular}_id": content.id, liked: true).destroy
-    content.likes_counter -= 1
-    content.save
-    likes.reload
-  end
-
-  # User cancel a previous dislike post
-  def cancel_dislike(content)
-    return if !dislike? content
-    likes.find_by("#{content.class.model_name.singular}_id": content.id, liked: false).destroy
-    content.dislikes_counter -= 1
-    content.save
-    likes.reload
-  end
   
   private
   

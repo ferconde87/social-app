@@ -4,10 +4,10 @@ class LikesController < ApplicationController
 
   def like
     respond_to do |format|
-      if !current_user.like? @content
-        current_user.like @content
+      if !Like.like?(current_user, @content)
+        Like.like(current_user, @content)
       else
-        current_user.cancel_like @content
+        Like.cancel_like(current_user, @content)
       end
       format.html { redirect_back fallback_location: root_url }
       format.js { render 'like'}
@@ -16,10 +16,10 @@ class LikesController < ApplicationController
 
   def dislike
     respond_to do |format|
-      if !current_user.dislike? @content
-        current_user.dislike @content
+      if !Like.dislike?(current_user, @content)
+        Like.dislike(current_user, @content)
       else
-        current_user.cancel_dislike @content
+        Like.cancel_dislike(current_user, @content)
       end
       format.html { redirect_back fallback_location: root_url }
       format.js { render 'dislike' }
