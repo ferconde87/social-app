@@ -80,6 +80,6 @@ class UserLikesCommentTest < ActionDispatch::IntegrationTest
     assert_difference '@bob.likes.count', -1 do
       @comment1.destroy
     end
-    assert Like.like?(@bob, @comment1)
+    assert_not Like.like?(@bob, @comment1)
   end
 end
