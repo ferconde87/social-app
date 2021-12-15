@@ -99,26 +99,6 @@ class User < ApplicationRecord
     Post.includes(:comments => :user).where("user_id IN (#{following_ids})", user_id: id)
   end
 
-  # Follows a user.
-  def follow(other_user)
-    following << other_user
-  end
-  
-  # Unfollows a user.
-  def unfollow(other_user)
-    following.delete(other_user)
-  end
-
-  # Returns true if the current user is following the other user.
-  def following?(other_user)
-    following.include?(other_user)
-  end
-
-  # Returns true if the other user is follower of the current user
-  def followers?(other_user)
-    followers.include?(other_user)
-  end
-
   # Update the attribute name with value and activated the user
   def activate_with_atttribute(name, value)
     update_columns("#{name}": value, activated: true, activated_at: Time.zone.now)

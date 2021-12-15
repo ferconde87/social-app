@@ -86,14 +86,14 @@ class UserTest < ActiveSupport::TestCase
 
   test "should follow and unfollow a user" do
     pepe = users(:pepe)
-    assert_not pepe.following?(@fernando)
-    assert_not @fernando.followers?(pepe)
-    pepe.follow(@fernando)
-    assert pepe.following?(@fernando)
-    assert @fernando.followers?(pepe)
-    pepe.unfollow(@fernando)
-    assert_not pepe.following?(@fernando)
-    assert_not @fernando.followers?(pepe)
+    assert_not Relationship.following?(pepe, @fernando)
+    assert_not Relationship.followers?(@fernando, pepe)
+    Relationship.follow(pepe, @fernando)
+    assert Relationship.following?(pepe, @fernando)
+    assert Relationship.followers?(@fernando, pepe)
+    Relationship.unfollow(pepe, @fernando)
+    assert_not Relationship.following?(pepe, @fernando)
+    assert_not Relationship.followers?(@fernando, pepe)
   end   
   
   test "feed should have the right posts" do

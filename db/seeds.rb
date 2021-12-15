@@ -44,8 +44,8 @@ users = User.all
 user = users.first #fer
 following = users[2..50]
 followers = users[3..40]
-following.each { |followed| user.follow(followed) }
-followers.each { |follower| follower.follow(user) }
+following.each { |followed| Relationship.follow(user, followed) }
+followers.each { |follower| Relationship.follow(follower, user) }
 
 # Create likes and dislikes
 users = User.order(:created_at).take(20)

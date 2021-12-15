@@ -1,6 +1,6 @@
 <% unless current_user?(@user) %>
   <div id="follow_form" class="text-center">
-    <% if current_user.following?(@user) %>
+    <% if Relationship.following?(current_user, @user) %>
       <%= render 'unfollow' %>
     <% else %>
       <%= render 'follow' %>

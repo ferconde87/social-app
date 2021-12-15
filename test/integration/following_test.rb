@@ -38,7 +38,7 @@ class FollowingTest < ActionDispatch::IntegrationTest
   end
 
   test "should unfollow a user the standard way" do
-    @user.follow(@other)
+    Relationship.follow(@user, @other)
     relationship = @user.active_relationships.find_by(followed_id: @other.id)
     assert_difference '@user.following.count', -1 do
       delete relationship_path(relationship)
@@ -46,7 +46,7 @@ class FollowingTest < ActionDispatch::IntegrationTest
   end
     
   test "should unfollow a user with Ajax" do
-    @user.follow(@other)
+    Relationship.follow(@user, @other)
     relationship = @user.active_relationships.find_by(followed_id: @other.id)
     assert_difference '@user.following.count', -1 do
       delete relationship_path(relationship), xhr: true
