@@ -3,27 +3,11 @@ class LikesController < ApplicationController
   before_action :current_content, only: [:like, :dislike]
 
   def like
-    respond_to do |format|
-      if !Like.like?(current_user, @content)
-        Like.like(current_user, @content)
-      else
-        Like.cancel_like(current_user, @content)
-      end
-      format.html { redirect_back fallback_location: root_url }
-      format.js { render 'like'}
-    end
+    choice("like")
   end
 
   def dislike
-    respond_to do |format|
-      if !Like.dislike?(current_user, @content)
-        Like.dislike(current_user, @content)
-      else
-        Like.cancel_dislike(current_user, @content)
-      end
-      format.html { redirect_back fallback_location: root_url }
-      format.js { render 'dislike' }
-    end
+    choice("dislike")
   end
 
   private
@@ -32,5 +16,18 @@ class LikesController < ApplicationController
     content_class_name = params[:content].capitalize
     @content ||= content_class_name.constantize.find(params[:id])
     @object = @content
+  end
+
+  def choice(option = "like")
+    respond_to do |format|
+
+      if !Like.send("#{option}?", current_user, @content)
+        Like.send("#{option}", current_user, @content)
+      else
+        Like.send("cancel_#{option}", current_user, @content)
+      end
+      format.html { redirect_back fallback_location: root_url }
+      format.js { render option }
+    end
   end
 end

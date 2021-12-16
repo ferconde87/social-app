@@ -20,12 +20,6 @@ class CommentsController < ApplicationController
         render root_path
       end
     end
-    
-    # respond_to do |format|  
-    #   @comment.destroy
-    #   format.html { redirect_back fallback_location: root_url }
-    #   format.js
-    # end
   end
 
   private
